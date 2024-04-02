@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,26 @@
 
 	<link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
-	<test-component>Universe</test-component>
-	<test-component greeting="Bonjour" class="alt">Univers</test-component>
-	<!-- <script type="module" src="https://cdn.jsdelivr.net/gh/JamesRobertHugginsNgo/web-component-boilerplate@1.1.0/dist/index.min.js"></script> -->
+	<sample-cframe breadcrumbs="breadcrumbsData" title="Page Title">
+		<div slot="test">Hello World</div>
+
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+			magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+			Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	</sample-cframe>
+
+	<script type="application/json" id="breadcrumbsData">
+		[
+			{ "text": "home", "link": "#" },
+			{ "text": "folder", "link": "#" },
+			{ "text": "page", "link": "#" }
+		]
+	</script>
+
 	<script type="module" src="/dist/index.js"></script>
 </body>
-</html>
 
+</html>
