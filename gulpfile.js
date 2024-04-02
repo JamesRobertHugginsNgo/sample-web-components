@@ -49,7 +49,7 @@ let destValue;
 
 function setup() {
 	return Promise.resolve().then(() => {
-		if (process.argv.indexOf('--clear') !== -1) {
+		if (process.argv.indexOf('--clean') !== -1 || process.argv.indexOf('--clear') !== -1) {
 			return Fs.rm(DEST, { recursive: true });
 		}
 	}).then(() => {
