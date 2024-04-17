@@ -6,26 +6,33 @@ const templateElement = document.createElement('template');
 templateElement.innerHTML = /* html */ `
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JamesRobertHugginsNgo/bootstrap@main/dist/css/bootstrap.min.css">
 
-	<div class="list-group"></div>
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+		</ol>
+	</nav>
 `;
 
-const templateItemElement = document.createElement('template');
-templateItemElement.innerHTML = /* html */ `
-	<a href="" class="list-group-item list-group-item-action"></a>
+const itemTemplateElement = document.createElement('template');
+itemTemplateElement.innerHTML = /* html */ `
+	<li class="breadcrumb-item"><a></a></li>
+`;
+
+const activeItemTemplateElement = document.createElement('template');
+activeItemTemplateElement.innerHTML = /* html */ `
+	<li class="breadcrumb-item active" aria-current="page"></li>
 `;
 
 // ==
 // CUSTOM ELEMENT(S)
 // ==
 
-customElements.define('sample-sidebar', class extends HTMLElement {
+customElements.define('sample-breadcrumb', class extends HTMLElement {
 
 	// --
 	// STATIC PROPERTY(IES)
 	// --
 
 	static observedAttributes = [
-		'active',
 		'items'
 	];
 
@@ -33,8 +40,7 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 	// PRIVATE PROPERTY(IES)
 	// --
 
-	#active;
-	#listGroupElement;
+	#breadcrumbElement;
 	#childNodes = [];
 	#items;
 	#mutationObserver;
@@ -42,27 +48,6 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 	// --
 	// PUBLIC PROPERTY(IES)
 	// --
-
-	get active() {
-		return this.#active;
-	}
-	set active(newValue) {
-		this.#active = +newValue || 0;
-
-		const activeElement = this.shadowRoot.querySelector(`a[aria-current="true"]`);
-		if (activeElement) {
-			activeElement.classList.remove('active');
-			activeElement.removeAttribute('aria-current');
-		}
-
-		if (this.#active) {
-			const newActiveElement = this.shadowRoot.querySelector(`a:nth-of-type(${this.#active})`);
-			if (newActiveElement) {
-				newActiveElement.classList.add('active');
-				newActiveElement.setAttribute('aria-current', true);
-			}
-		}
-	}
 
 	get items() {
 		console.log('GET - ITEMS');
@@ -74,7 +59,7 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 
 		this.#items = newValue;
 
-		this.#listGroupElement.innerHTML = '';
+		this.#breadcrumbElement.innerHTML = '';
 
 		if (!Array.isArray(this.#items)) {
 			return;
@@ -86,12 +71,20 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 				continue;
 			}
 
+			if (index + 1 === this.#items.length) {
+				const { text } = item;
+				const documentFragment = activeItemTemplateElement.content.cloneNode(true);
+				documentFragment.querySelector('.breadcrumb-item').textContent = text;
+				this.#breadcrumbElement.appendChild(documentFragment);
+				continue;
+			}
+
 			const { text, link } = item;
-			const documentFragment = templateItemElement.content.cloneNode(true);
+			const documentFragment = itemTemplateElement.content.cloneNode(true);
 			const linkElement = documentFragment.querySelector('a');
 			linkElement.textContent = text;
 			linkElement.setAttribute('href', link);
-			this.#listGroupElement.appendChild(documentFragment);
+			this.#breadcrumbElement.appendChild(documentFragment);
 		}
 	}
 
@@ -107,14 +100,14 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 		this.attachShadow({ mode: 'open' });
 		this.shadowRoot.appendChild(templateElement.content.cloneNode(true));
 
-		this.#listGroupElement = this.shadowRoot.querySelector('.list-group');
+		this.#breadcrumbElement = this.shadowRoot.querySelector('.breadcrumb');
 
 		this.#mutationObserver = new MutationObserver((mutationRecords) => {
-			this.#childNodes = Array.from(this.childNodes);
+			this.#childNodes = Array.from(this.#childNodes);
 			this.mutationCallback(mutationRecords);
 		});
 
-		this.#childNodes = Array.from(this.childNodes);
+		this.#childNodes = Array.from(this.#childNodes);
 		this.mutationCallback();
 	}
 
@@ -123,7 +116,6 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 		console.log('Custom element added to page.');
 		console.groupEnd();
 
-		console.log('CHILD NODES', this.#childNodes);
 		if (this.#childNodes.length !== this.childNodes.length || !this.#childNodes.every((node, index) => {
 			return node === this.childNodes[index];
 		})) {
@@ -156,10 +148,6 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 		console.groupEnd();
 
 		switch (name) {
-			case 'active': {
-				this.active = newValue;
-				break;
-			}
 			case 'items':
 				try {
 					this.items = JSON.parse(newValue);
