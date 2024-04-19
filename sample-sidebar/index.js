@@ -35,20 +35,13 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 
 	#active;
 	#listGroupElement;
-	#childNodes = [];
 	#items;
-	#mutationObserver;
 
 	// --
-	// PUBLIC PROPERTY(IES)
+	// PRIVATE METHOD(S)
 	// --
 
-	get active() {
-		return this.#active;
-	}
-	set active(newValue) {
-		this.#active = +newValue || 0;
-
+	#setActive() {
 		const activeElement = this.shadowRoot.querySelector(`a[aria-current="true"]`);
 		if (activeElement) {
 			activeElement.classList.remove('active');
@@ -64,14 +57,22 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 		}
 	}
 
-	get items() {
-		console.log('GET - ITEMS');
+	// --
+	// PUBLIC PROPERTY(IES)
+	// --
 
+	get active() {
+		return this.#active;
+	}
+	set active(newValue) {
+		this.#active = +newValue || 0;
+		this.#setActive();
+	}
+
+	get items() {
 		return this.#items;
 	}
 	set items(newValue) {
-		console.log('SET - ITEMS');
-
 		this.#items = newValue;
 
 		this.#listGroupElement.innerHTML = '';
@@ -93,6 +94,8 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 			linkElement.setAttribute('href', link);
 			this.#listGroupElement.appendChild(documentFragment);
 		}
+
+		this.#setActive();
 	}
 
 	// --
@@ -102,59 +105,27 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 	constructor() {
 		super();
 
-		console.log('CONSTRUCTOR', this);
-
 		this.attachShadow({ mode: 'open' });
 		this.shadowRoot.appendChild(templateElement.content.cloneNode(true));
 
 		this.#listGroupElement = this.shadowRoot.querySelector('.list-group');
 
-		this.#mutationObserver = new MutationObserver((mutationRecords) => {
-			this.#childNodes = Array.from(this.childNodes);
+		new MutationObserver((mutationRecords) => {
 			this.mutationCallback(mutationRecords);
-		});
-
-		this.#childNodes = Array.from(this.childNodes);
+		}).observe(this, { childList: true });
 		this.mutationCallback();
 	}
 
-	connectedCallback() {
-		console.group('CONNECTED CALLBACK');
-		console.log('Custom element added to page.');
-		console.groupEnd();
+	// connectedCallback() {
+	// }
 
-		console.log('CHILD NODES', this.#childNodes);
-		if (this.#childNodes.length !== this.childNodes.length || !this.#childNodes.every((node, index) => {
-			return node === this.childNodes[index];
-		})) {
-			this.#childNodes = Array.from(this.childNodes);
-			this.mutationCallback();
-		}
+	// disconnectedCallback() {
+	// }
 
-		this.#mutationObserver.observe(this, { childList: true });
-	}
-
-	disconnectedCallback() {
-		console.group('DISCONNECTED CALLBACK');
-		console.log('Custom element removed from page.');
-		console.groupEnd();
-
-		this.#mutationObserver.disconnect();
-	}
-
-	adoptedCallback() {
-		console.group('ADOPTED CALLBACK');
-		console.log('Custom element moved to new page.');
-		console.groupEnd();
-	}
+	// adoptedCallback() {
+	// }
 
 	attributeChangedCallback(name, oldValue, newValue) {
-		console.group('ATTRIBUTE CHANGED CALLBACK');
-		console.log('NAME', name);
-		console.log('OLD VALUE', oldValue);
-		console.log('NEW VALUE', newValue);
-		console.groupEnd();
-
 		switch (name) {
 			case 'active': {
 				this.active = newValue;
@@ -171,11 +142,7 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 		}
 	}
 
-	mutationCallback(mutationRecords) {
-		console.group('MUTATION CALLBACK');
-		console.log('MUTATION RECORDS', mutationRecords);
-		console.groupEnd();
-
+	mutationCallback() {
 		const items = [];
 		const linkElements = this.querySelectorAll(':scope > a');
 		for (let index = 0; index < linkElements.length; index++) {

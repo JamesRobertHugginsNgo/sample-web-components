@@ -8,8 +8,6 @@ const sidebar = document.querySelector('sample-sidebar');
 let hasRouted = false;
 
 startRouter((navigate) => {
-	console.log('ROUTER CALLBACK', window.location.hash);
-
 	const [path] = window.location.hash.split('?');
 
 	// --
@@ -84,8 +82,99 @@ startRouter((navigate) => {
 
 			page.title = 'Directory';
 			page.innerHTML = /* html */ `
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<sample-table></sample-table>
 			`;
+
+			const columns = [
+				{
+					title: 'Column A',
+					data: 'colA',
+					sortable: true
+				},
+				{
+					title: 'Column B',
+					data: 'colB',
+					sortable: true
+				},
+				{
+					title: 'Column C',
+					data: 'colC'
+				},
+				{
+					title: 'Column D',
+					data: 'colD'
+				},
+				{
+					title: 'Column E',
+					data: 'colE'
+				},
+				{
+					title: 'Column F',
+					data: 'colF',
+					sortable: true,
+					type: 'number'
+				}
+			];
+
+			const data = [
+				{
+					colA: 'Data A',
+					colB: 'Data B',
+					colC: 'Data C',
+					colE: 'Data 1',
+					colF: 5
+				},
+				{
+					colA: 'Data D',
+					colB: 'Data E',
+					colC: 'Data F',
+					colF: 20
+				},
+				{
+					colA: 'Data G',
+					colB: 'Data H',
+					colC: 'Data I',
+					colD: 'Data 3',
+					colF: 10
+				},
+				{
+					colA: 'Data J',
+					colB: 'Data K',
+					colC: 'Data L',
+					colD: 'Data 4',
+					colE: 'Data 5',
+					colF: 0
+				}
+			];
+
+			const tableElement = page.firstElementChild;
+			tableElement.columns = columns;
+			tableElement.data = data;
+
+			tableElement.addEventListener('sortby', (event) => {
+				if (!event.detail) {
+					tableElement.data = data;
+					return;
+				}
+
+				const {
+					data: sortByData,
+					type: sortByType
+				} = event.detail;
+
+				tableElement.data = data.sort((a, b) => {
+					const dataA = !a || !a[sortByData] ? '' : a[sortByData];
+					const dataB = !b || !b[sortByData] ? '' : b[sortByData];
+					if (dataA > dataB) {
+						return sortByType === 'descending' ? -1 : 1;
+					}
+					if (dataA < dataB) {
+						return sortByType === 'descending' ? 1 : -1;
+					}
+					return 0;
+				});
+			});
+
 			page.appendChild(sidebar);
 			sidebar.active = 2;
 
@@ -99,8 +188,8 @@ startRouter((navigate) => {
 		}
 	}
 
-		// --
-	// DIRECTORY
+	// --
+	// PAGE
 	// --
 
 	{
@@ -137,6 +226,7 @@ startRouter((navigate) => {
 	{
 		breadcrumb.items = [
 			{ text: 'Website', link: '#home' },
+			{ text: 'Home', link: '#home' },
 			{ text: '404', link: '#home' }
 		];
 

@@ -76,6 +76,15 @@ customElements.define('sample-page', class extends HTMLElement {
 		this.#titleElement = this.shadowRoot.querySelector('h1');
 	}
 
+	// connectedCallback() {
+	// }
+
+	// disconnectedCallback() {
+	// }
+
+	// adoptedCallback() {
+	// }
+
 	attributeChangedCallback(name, oldValue, newValue) {
 		switch (name) {
 			case 'title': {

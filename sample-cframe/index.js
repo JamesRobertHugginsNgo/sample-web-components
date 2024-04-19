@@ -107,4 +107,16 @@ customElements.define('sample-cframe', class extends HTMLElement {
 		this.attachShadow({ mode: 'open' });
 		this.shadowRoot.appendChild(templateElement.content.cloneNode(true));
 	}
+
+	// connectedCallback() {
+	// }
+
+	// disconnectedCallback() {
+	// }
+
+	// adoptedCallback() {
+	// }
+
+	// attributeChangedCallback(name, oldValue, newValue) {
+	// }
 });
