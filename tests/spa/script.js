@@ -15,7 +15,6 @@ sidebar.innerHTML = /* html */ `
 `;
 
 let page;
-
 startRouter((navigate, { path, query, hasRouted, previousPath, previousquery }) => {
 
 	// --
@@ -46,12 +45,9 @@ startRouter((navigate, { path, query, hasRouted, previousPath, previousquery }) 
 	{
 		const match = path.match(/^home$/);
 		if (match) {
-			cframe.innerHTML = '';
-
 			breadcrumb.items = [
-				{ text: 'Home', link: '#home' }
+				{ text: 'Home' }
 			];
-			cframe.appendChild(breadcrumb);
 
 			page = document.createElement('sample-page');
 			page.setAttribute('id', 'content');
@@ -83,7 +79,7 @@ startRouter((navigate, { path, query, hasRouted, previousPath, previousquery }) 
 			sidebar.select = 1;
 			page.appendChild(sidebar);
 
-			cframe.appendChild(page);
+			cframe.replaceChildren(breadcrumb, page);
 
 			if (hasRouted) {
 				page.focus();
@@ -100,13 +96,10 @@ startRouter((navigate, { path, query, hasRouted, previousPath, previousquery }) 
 	{
 		const match = path.match(/^aboutus$/);
 		if (match) {
-			cframe.innerHTML = '';
-
 			breadcrumb.items = [
 				{ text: 'Home', link: '#home' },
-				{ text: 'About Us', link: '#aboutus' }
+				{ text: 'About Us' }
 			];
-			cframe.appendChild(breadcrumb);
 
 			page = document.createElement('sample-page');
 			page.setAttribute('id', 'content');
@@ -144,7 +137,7 @@ startRouter((navigate, { path, query, hasRouted, previousPath, previousquery }) 
 			sidebar.select = 2;
 			page.appendChild(sidebar);
 
-			cframe.appendChild(page);
+			cframe.replaceChildren(breadcrumb, page);
 
 			if (hasRouted) {
 				page.focus();
@@ -161,24 +154,32 @@ startRouter((navigate, { path, query, hasRouted, previousPath, previousquery }) 
 	{
 		const match = path.match(/^table$/);
 		if (match) {
-			cframe.innerHTML = '';
-
 			breadcrumb.items = [
 				{ text: 'Home', link: '#home' },
-				{ text: 'Table', link: '#table' }
+				{ text: 'Table' }
 			];
-			cframe.appendChild(breadcrumb);
 
 			page = document.createElement('sample-page');
 			page.setAttribute('id', 'content');
 			page.title = 'Table';
-			page.innerHTML = /* html */ `
-			`;
+
+			const table = page.appendChild(document.createElement('sample-table'));
+			table.columns = [
+				{ title: 'Column A', data: 'dataA' },
+				{ title: 'Column B', data: 'dataB' },
+				{ data: 'dataC' },
+				{ title: 'Column D', data: 'dataD', type: 'number' }
+			];
+			table.data = [
+				{ dataA: 'Value A', dataB: 'Value B', dataC: 'Value C', dataD: 200000 },
+				{ dataA: 'Value E', dataB: 'Value F', dataC: 'Value G', dataD: 10000 },
+				{ dataA: 'Value I', dataB: 'Value J', dataC: 'Value K', dataD: 0 }
+			];
 
 			sidebar.select = 3;
 			page.appendChild(sidebar);
 
-			cframe.appendChild(page);
+			cframe.replaceChildren(breadcrumb, page);
 
 			if (hasRouted) {
 				page.focus();
@@ -195,13 +196,10 @@ startRouter((navigate, { path, query, hasRouted, previousPath, previousquery }) 
 	{
 		const match = path.match(/^form$/);
 		if (match) {
-			cframe.innerHTML = '';
-
 			breadcrumb.items = [
 				{ text: 'Home', link: '#home' },
-				{ text: 'Form', link: '#form' }
+				{ text: 'Form' }
 			];
-			cframe.appendChild(breadcrumb);
 
 			page = document.createElement('sample-page');
 			page.setAttribute('id', 'content');
@@ -212,7 +210,7 @@ startRouter((navigate, { path, query, hasRouted, previousPath, previousquery }) 
 			sidebar.select = 4;
 			page.appendChild(sidebar);
 
-			cframe.appendChild(page);
+			cframe.replaceChildren(breadcrumb, page);
 
 			if (hasRouted) {
 				page.focus();
@@ -227,13 +225,10 @@ startRouter((navigate, { path, query, hasRouted, previousPath, previousquery }) 
 	// --
 
 	{
-		cframe.innerHTML = '';
-
 		breadcrumb.items = [
 			{ text: 'Home', link: '#home' },
-			{ text: '404', link: '#home' }
+			{ text: '404' }
 		];
-		cframe.appendChild(breadcrumb);
 
 		page = document.createElement('sample-page');
 		page.setAttribute('id', 'content');
@@ -262,7 +257,7 @@ startRouter((navigate, { path, query, hasRouted, previousPath, previousquery }) 
 		sidebar.select = 0;
 		page.appendChild(sidebar);
 
-		cframe.appendChild(page);
+		cframe.replaceChildren(breadcrumb, page);
 
 		if (hasRouted) {
 			page.focus();

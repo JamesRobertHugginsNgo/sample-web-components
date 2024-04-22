@@ -75,12 +75,12 @@ class SampleSidebar extends HTMLElement {
 	set items(newValue) {
 		this.#items = newValue;
 
-		this.#listGroupElement.innerHTML = '';
-
 		if (!Array.isArray(this.#items)) {
+			this.#listGroupElement.replaceChildren();
 			return;
 		}
 
+		const listGroupDocumentFragment = document.createDocumentFragment();
 		for (let index = 0; index < this.#items.length; index++) {
 			const item = this.#items[index];
 			if (!item || typeof item !== 'object') {
@@ -92,8 +92,9 @@ class SampleSidebar extends HTMLElement {
 			const linkElement = documentFragment.querySelector('a');
 			linkElement.textContent = text;
 			linkElement.setAttribute('href', link);
-			this.#listGroupElement.appendChild(documentFragment);
+			listGroupDocumentFragment.appendChild(documentFragment);
 		}
+		this.#listGroupElement.replaceChildren(listGroupDocumentFragment);
 
 		this.#setSelection();
 	}

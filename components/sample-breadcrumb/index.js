@@ -53,12 +53,12 @@ class SampleBreadcrumb extends HTMLElement {
 	set items(newValue) {
 		this.#items = newValue;
 
-		this.#breadcrumbElement.innerHTML = '';
-
 		if (!Array.isArray(this.#items)) {
+			this.#breadcrumbElement.replaceChildren();
 			return;
 		}
 
+		const breadcrumbDocumentFragment = document.createDocumentFragment();
 		for (let index = 0; index < this.#items.length; index++) {
 			const item = this.#items[index];
 			if (!item || typeof item !== 'object') {
@@ -69,7 +69,7 @@ class SampleBreadcrumb extends HTMLElement {
 				const { text } = item;
 				const documentFragment = activeItemTemplateElement.content.cloneNode(true);
 				documentFragment.querySelector('.breadcrumb-item').textContent = text;
-				this.#breadcrumbElement.appendChild(documentFragment);
+				breadcrumbDocumentFragment.appendChild(documentFragment);
 				continue;
 			}
 
@@ -78,8 +78,9 @@ class SampleBreadcrumb extends HTMLElement {
 			const linkElement = documentFragment.querySelector('a');
 			linkElement.textContent = text;
 			linkElement.setAttribute('href', link);
-			this.#breadcrumbElement.appendChild(documentFragment);
+			breadcrumbDocumentFragment.appendChild(documentFragment);
 		}
+		this.#breadcrumbElement.replaceChildren(breadcrumbDocumentFragment);
 	}
 
 	// --

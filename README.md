@@ -11,7 +11,7 @@
 - [Sample Breadcrumb](https://jamesroberthugginsngo.github.io/sample-web-components/components/sample-breadcrumb/index.js)
 - [Sample Page](https://jamesroberthugginsngo.github.io/sample-web-components/components/sample-page/index.js)
 - [Sample Sidebar](https://jamesroberthugginsngo.github.io/sample-web-components/components/sample-sidebar/index.js)
-- Sample Table
+- [Sample Table](https://jamesroberthugginsngo.github.io/sample-web-components/components/sample-table/index.js)
 - Sample Form
 
 ### Tests

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Sample Web Components - Table</title>
+
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<sample-cframe>
+		<sample-breadcrumb slot="breadcrumb">
+			<a href="./index.html">Home</a>
+			<a href="./table.html">Table</a>
+		</sample-breadcrumb>
+
+		<sample-page title="Table">
+			<sample-table
+				columns='[{"title":"Column A","data":"dataA"},{"title":"Column B","data":"dataB"},{"data":"dataC"},{"title":"Column D","data":"dataD","type":"number"}]'
+				data='[{"dataA":"Value A","dataB":"Value B","dataC":"Value C","dataD":200},{"dataA":"Value E","dataB":"Value F","dataC":"Value G","dataD":100}]'
+			></sample-table>
+
+			<sample-sidebar select="3" slot="sidebar">
+				<a href="./index.html">Home</a>
+				<a href="./about-us.html">About Us</a>
+				<a href="./table.html">Table</a>
+			</sample-sidebar>
+		</sample-page>
+	</sample-cframe>
+
+	<script type="module" src="../../components/index.js"></script>
+</body>
+
+</html>
