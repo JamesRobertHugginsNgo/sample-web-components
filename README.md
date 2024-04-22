@@ -17,7 +17,7 @@
 ### Tests
 
 - [Mock Test](https://jamesroberthugginsngo.github.io/sample-web-components/tests/mock/index.html)
-- [SPA Test](https://jamesroberthugginsngo.github.io/sample-web-components/tests/mock/index.html)
+- [SPA Test](https://jamesroberthugginsngo.github.io/sample-web-components/tests/spa/index.html)
 
 ## Additional Information
 
