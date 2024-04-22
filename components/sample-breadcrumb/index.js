@@ -23,10 +23,10 @@ activeItemTemplateElement.innerHTML = /* html */ `
 `;
 
 // ==
-// CUSTOM ELEMENT(S)
+// CLASS(ES)
 // ==
 
-customElements.define('sample-breadcrumb', class extends HTMLElement {
+class SampleBreadcrumb extends HTMLElement {
 
 	// --
 	// STATIC PROPERTY(IES)
@@ -134,4 +134,10 @@ customElements.define('sample-breadcrumb', class extends HTMLElement {
 		}
 		this.items = items;
 	}
-});
+}
+
+// ==
+// CUSTOM ELEMENT(S)
+// ==
+
+customElements.define('sample-breadcrumb', SampleBreadcrumb);

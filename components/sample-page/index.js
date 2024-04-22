@@ -22,10 +22,10 @@ templateElement.innerHTML = /* html */ `
 `;
 
 // ==
-// CUSTOM ELEMENT(S)
+// CLASS(ES)
 // ==
 
-customElements.define('sample-page', class extends HTMLElement {
+class SamplePage extends HTMLElement {
 
 	// --
 	// STATIC PROPERTY(IES)
@@ -93,4 +93,10 @@ customElements.define('sample-page', class extends HTMLElement {
 			}
 		}
 	}
-});
+}
+
+// ==
+// CUSTOM ELEMENT(S)
+// ==
+
+customElements.define('sample-page', SamplePage);

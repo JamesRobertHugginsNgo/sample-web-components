@@ -15,41 +15,41 @@ templateItemElement.innerHTML = /* html */ `
 `;
 
 // ==
-// CUSTOM ELEMENT(S)
+// CLASS(ES)
 // ==
 
-customElements.define('sample-sidebar', class extends HTMLElement {
+class SampleSidebar extends HTMLElement {
 
 	// --
 	// STATIC PROPERTY(IES)
 	// --
 
 	static observedAttributes = [
-		'active',
-		'items'
+		'items',
+		'select',
 	];
 
 	// --
 	// PRIVATE PROPERTY(IES)
 	// --
 
-	#active;
-	#listGroupElement;
 	#items;
+	#listGroupElement;
+	#select;
 
 	// --
 	// PRIVATE METHOD(S)
 	// --
 
-	#setActive() {
+	#setSelection() {
 		const activeElement = this.shadowRoot.querySelector(`a[aria-current="true"]`);
 		if (activeElement) {
 			activeElement.classList.remove('active');
 			activeElement.removeAttribute('aria-current');
 		}
 
-		if (this.#active) {
-			const newActiveElement = this.shadowRoot.querySelector(`a:nth-of-type(${this.#active})`);
+		if (this.#select) {
+			const newActiveElement = this.shadowRoot.querySelector(`a:nth-of-type(${this.#select})`);
 			if (newActiveElement) {
 				newActiveElement.classList.add('active');
 				newActiveElement.setAttribute('aria-current', true);
@@ -61,12 +61,12 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 	// PUBLIC PROPERTY(IES)
 	// --
 
-	get active() {
-		return this.#active;
+	get select() {
+		return this.#select;
 	}
-	set active(newValue) {
-		this.#active = +newValue || 0;
-		this.#setActive();
+	set select(newValue) {
+		this.#select = +newValue || 0;
+		this.#setSelection();
 	}
 
 	get items() {
@@ -95,7 +95,7 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 			this.#listGroupElement.appendChild(documentFragment);
 		}
 
-		this.#setActive();
+		this.#setSelection();
 	}
 
 	// --
@@ -127,10 +127,6 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 
 	attributeChangedCallback(name, oldValue, newValue) {
 		switch (name) {
-			case 'active': {
-				this.active = newValue;
-				break;
-			}
 			case 'items':
 				try {
 					this.items = JSON.parse(newValue);
@@ -139,6 +135,10 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 					this.items = null;
 				}
 				break;
+			case 'select': {
+				this.select = newValue;
+				break;
+			}
 		}
 	}
 
@@ -154,4 +154,10 @@ customElements.define('sample-sidebar', class extends HTMLElement {
 		}
 		this.items = items;
 	}
-});
+}
+
+// ==
+// CUSTOM ELEMENT(S)
+// ==
+
+customElements.define('sample-sidebar', SampleSidebar);

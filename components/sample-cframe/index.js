@@ -44,6 +44,8 @@ templateElement.innerHTML = /* html */ `
 		}
 	</style>
 
+	<a class="visually-hidden-focusable" href="#content">Skip to main content</a>
+
 	<header>
 		<div class="banner">
 			<div class="container-fluid">
@@ -63,7 +65,7 @@ templateElement.innerHTML = /* html */ `
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col">
-						<slot name="breadcrumbs"></slot>
+						<slot name="breadcrumb"></slot>
 					</div>
 				</div>
 			</div>
@@ -92,10 +94,17 @@ templateElement.innerHTML = /* html */ `
 `;
 
 // ==
-// CUSTOM ELEMENT(S)
+// CLASS(ES)
 // ==
 
-customElements.define('sample-cframe', class extends HTMLElement {
+class SampleCframe extends HTMLElement {
+
+	// --
+	// STATIC PROPERTY(IES)
+	// --
+
+	// static observedAttributes = [
+	// ];
 
 	// --
 	// LIFE CYCLE METHOD(S)
@@ -119,4 +128,10 @@ customElements.define('sample-cframe', class extends HTMLElement {
 
 	// attributeChangedCallback(name, oldValue, newValue) {
 	// }
-});
+}
+
+// ==
+// CUSTOM ELEMENT(S)
+// ==
+
+customElements.define('sample-cframe', SampleCframe);

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Sample Web Components - Home</title>
+
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<sample-cframe>
+		<sample-breadcrumb slot="breadcrumb">
+			<a href="./index.html">Home</a>
+		</sample-breadcrumb>
+
+		<sample-page title="Welcome to [Your Website Name]">
+			<p>At [Your Website Name], we're dedicated to bringing you engaging and informative content that covers a wide
+				range of topics. Whether you're looking for articles on lifestyle, health, technology, travel, or just about
+				anything else, you've come to the right place.</p>
+
+			<h2>Explore Diverse Content</h2>
+
+			<p>Dive into our vast library of articles curated to cater to your interests and curiosity. From practical tips
+				and advice to thought-provoking insights and entertainment, there's something for everyone. Our team of writers
+				is passionate about delivering high-quality content that both informs and entertains.</p>
+
+			<h2>Stay Updated</h2>
+
+			<p>Stay in the loop with the latest trends, news, and developments across various fields. Our content is regularly
+				updated to ensure you're always informed about what's happening in the world around you.</p>
+
+			<h2>Connect with Our Community</h2>
+
+			<p>Join our growing community of readers who share a passion for knowledge and discovery. Engage with fellow
+				enthusiasts through comments, discussions, and sharing your thoughts on our articles.</p>
+
+			<h2>Contribute Your Voice</h2>
+
+			<p>Have a story to share or expertise to impart? We welcome contributions from guest writers who want to share
+				their unique perspectives and insights with our audience. Get in touch with us to learn more about how you can
+				become a part of our community of contributors.</p>
+
+			<h2>Start Exploring Today</h2>
+
+			<p>Ready to embark on a journey of discovery? Start exploring our content today and unlock a world of information,
+				inspiration, and entertainment.</p>
+
+			<sample-sidebar select="1" slot="sidebar">
+				<a href="./index.html">Home</a>
+				<a href="./about-us.html">About Us</a>
+			</sample-sidebar>
+		</sample-page>
+	</sample-cframe>
+
+	<script type="module" src="../../components/index.js"></script>
+</body>
+
+</html>
